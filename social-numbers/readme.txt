@@ -1,6 +1,6 @@
 === Social Numbers ===
 Contributors: filipjohansson
-Donate link: http://www.filipjohansson.se
+Donate link: http://filipjohansson.github.com/Social-Numbers/
 Tags: social media, facebook, twitter, template tag
 Requires at least: 3.3.1
 Tested up to: 3.3.1
@@ -44,3 +44,7 @@ If you don't want to echo the result you can use the function with the get_ pref
 
 = 0.1 =
 * Initial release. Supporting Facebook and Twitter.
+
+
+== Contribute ==
+If you want to contribute to the project. Please feel free to watch, fork and love the project on [GitHub](https://github.com/filipjohansson/Social-Numbers).
