@@ -45,16 +45,37 @@ function get_social_number( $network, $id ) {
 	$url = get_permalink( $id );
 	switch ( $network ) {
 		case 'facebook':
-			$json_string = file_get_contents( 'http://graph.facebook.com/?ids=' . $url );
-    		$json = json_decode( $json_string, true );
-    		
-		    return ( isset($json[$url]['shares']) ? intval( $json[$url]['shares'] ) : 0 );
+			if ( function_exists( 'curl_init' ) ) { 
+    			$ch = curl_init();
+				curl_setopt( $ch, CURLOPT_URL, 'http://graph.facebook.com/?ids=' . $url );
+				curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
+				curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, 5 );
+				$file_contents = curl_exec( $ch );
+				$json = json_decode( $file_contents, true );
+				curl_close( $ch ); 
+    		} else {
+				$json_string = file_get_contents( 'http://graph.facebook.com/?ids=' . $url );
+    			$json = json_decode( $json_string, true );
+			}
+			
+			return (isset($json[$url]['shares']) ? intval( $json[$url]['shares'] ) : 0);
 			break;
 		case 'twitter':
-			$json_string = file_get_contents( 'http://urls.api.twitter.com/1/urls/count.json?url=' . $url );
-    		$json = json_decode( $json_string, true );
+			if ( function_exists( 'curl_init' ) ) { 
+    			$ch = curl_init();
+				curl_setopt( $ch, CURLOPT_URL, 'http://urls.api.twitter.com/1/urls/count.json?url=' . $url );
+				curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
+				curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, 5 );
+				$file_contents = curl_exec( $ch );
+				$json = json_decode( $file_contents, true );
+				curl_close( $ch ); 
+    		} else {
+				$json_string = file_get_contents( 'http://urls.api.twitter.com/1/urls/count.json?url=' . $url );
+    			$json = json_decode( $json_string, true );
+			}
+			
     		
-    		return ( isset($json['count']) ? intval($json['count']) : 0 );
+    		return ( isset( $json['count'] ) ? intval( $json['count'] ) : 0 );
 			break;
 	}
 }
